@@ -18,12 +18,14 @@ class AskDemoArticleParser(
   htmlParserActorPath: String,
   implicit val timeout: Timeout) extends Actor {
 
+  import scala.concurrent.ExecutionContext.Implicits.global
+
   val system = ActorSystem("ask-demo-actor-system")
   val senderRef = sender()
 
-  val cacheActor = system.actorSelection(cacheActorPath)
-  val httpClientActor = system.actorSelection(httpClientActorPath)
-  val htmlParserActor = system.actorSelection(htmlParserActorPath)
+  val cacheActor = context.actorSelection(cacheActorPath)
+  val httpClientActor = context.actorSelection(httpClientActorPath)
+  val htmlParserActor = context.actorSelection(htmlParserActorPath)
 
   override def receive: Receive = {
     case HtmlArticle(url: String) => {
