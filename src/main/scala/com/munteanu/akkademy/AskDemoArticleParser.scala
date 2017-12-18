@@ -56,6 +56,6 @@ class AskDemoArticleParser(
       }
     }
     case _ =>
-      sender() ! Status.Failure(new ClassNotFoundException())
+      senderRef ! Status.Failure(new ClassNotFoundException())
   }
 }
